@@ -1,0 +1,16 @@
+<div class="nav-container">
+  <app-app-bar></app-app-bar>
+  <mat-sidenav-container class="mat-sidenav-container" autosize>
+    <mat-sidenav [fixedInViewport]="false" [mode]="over" #sidenav
+      [opened]="navService.isOpen"
+      [@onSideNavChange]="navService.isOpen" (closed)="navService.closeNav()">
+      <app-side-nav></app-side-nav>
+    </mat-sidenav>
+
+    <mat-sidenav-content [@onMainContentChange]="navService.isOpen">
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

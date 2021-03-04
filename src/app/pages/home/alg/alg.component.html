@@ -1,0 +1,68 @@
+<div class="row no-gutters">
+  <div class="col-12">
+    <h1 class="recommended">{{ title }}</h1>
+  </div>
+
+  <div class="container">
+
+    <div class="tab">
+    <mat-tab-group animationDuration="350ms">
+        <mat-tab label="Ordenar Arreglo">
+          <mat-card-content>
+            <div class="row no-gutters">
+            <div class="col-6" *ngIf="unsorted.length > 0">
+              <h3>Original</h3>
+            <mat-list role="list">
+              <mat-list-item *ngFor="let i of unsorted" role="listitem">{{i}}</mat-list-item>
+            </mat-list>
+          </div>
+           
+          <div class="col-6" *ngIf="sorted.length > 0">
+            <h3>Ordenado</h3>
+          <mat-list role="list">
+            <mat-list-item *ngFor="let i of sorted" role="listitem">{{i}}</mat-list-item>
+          </mat-list>
+          </div>
+        </div>
+            <button (click)="sort()" mat-raised-button color="primary" class="auth-button">
+              Generar
+            </button>
+          </mat-card-content>
+        </mat-tab>
+       
+        <mat-tab  label="Exponenciación">
+          <mat-card-content>
+            <form action="#" #fu="ngForm" (ngSubmit)="ExpSubmit(fu)">
+              <mat-form-field>
+                <input matInput type="number" placeholder="Numero X" name="x" ngModel #x="ngModel" required/>
+                <mat-icon matSuffix>edit</mat-icon>
+                <mat-error *ngIf="x.invalid">
+                  Numero X requerido
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="number" placeholder="Numero Y" name="y" ngModel #y="ngModel" required/>
+                <mat-icon matSuffix>edit</mat-icon>
+                <mat-error *ngIf="y.invalid">
+                  Numero Y requerido
+                </mat-error>
+              </mat-form-field>
+
+              <h1 style="text-align: center;">Resultado: {{ result }}</h1>
+
+              <button mat-raised-button color="primary" class="auth-button">
+                Calcular
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(0,0,0,0.5)"
+  size="large"
+  color="#fff"
+  type="pacman"
+></ngx-spinner>

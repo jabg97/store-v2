@@ -1,0 +1,96 @@
+<div class="containers">
+  <div class="row mt-4">
+    <div class="col-lg-8 col-md-6 col-sm-12">
+     
+      <div class="bottom">
+        <h1 class="title">
+          {{ product.name }}  
+          <mat-icon (click)="add(product.id,this._api.getUser)" class="txt-teal">add_shopping_cart</mat-icon>
+          <mat-icon *ngIf="this._api.getUser == product.seller_id" [routerLink]="['/upload/'+product.id]" class="link txt-warning">edit</mat-icon>
+
+        </h1>
+        
+       
+          <h3 class="unit-value">$ {{ product.unit_value | number }} </h3>
+          <div style="text-align: center;">
+         <img class="img-read" onerror="this.src='../../../assets/img/thumbnail.jpg'" src="{{ product.img }}"
+          alt="" /> 
+          <h4 class="subtitle">{{ product.reference }} </h4>
+          <mat-divider></mat-divider>
+          
+        </div>
+        <div class="description">
+          {{ product.description }}
+        </div>
+        <mat-divider></mat-divider>
+        <div class="d-flex">
+         
+          <p class="views">Fecha publicación • {{ product.created_at }}</p>
+          <div style="flex-grow: 1;"></div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="mt-3">
+          <div class="d-flex">
+            <img class="link" [routerLink]="['/profile/'+product.seller_id]" class="avatar link" alt="User"
+              onerror="this.src='../../../assets/img/user.jpg'" src="{{ product.profile }}" alt="" />
+            <div id="profile" style="display: flex; flex-direction: column;">
+              <span class="link" [routerLink]="['/profile/'+product.seller_id]">{{ product.user_name }}</span>
+            </div>
+            <div style="flex-grow: 1;"></div>
+          </div>
+          <mat-divider class="comment-divider"></mat-divider>
+          
+          <span>{{ comments_count }} Comentarios</span>
+        </div>
+
+        <div *ngIf="is_auth" class="mt-3 d-flex">
+          <img [routerLink]="['/profile/'+user.id]" class="avatar-sm link" onerror="this.src='../../../assets/img/user.jpg'" src="{{ user.profile }}" alt="" />
+          <form class="w-100" #fc="ngForm" (ngSubmit)="CommentSubmit(fc)">
+            <mat-form-field class="w-100 ml-3" style="font-size: 13px; color: black;" floatLabel="never">
+              <mat-label>Añadir un comentario...</mat-label>
+              <input matInput name="content" ngModel #content="ngModel" />
+            </mat-form-field>
+            <div class="comment-btn-group">
+              <button mat-flat-button color="primary" class="submit ml-1">
+                Comentar
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="mt-4 d-flex" *ngFor="let comment of comments ; index as i">
+          <img [routerLink]="['/profile/'+comment.user_id]" class="avatar-sm link" alt="User"
+            onerror="this.src='../../../assets/img/user.jpg'" src="{{ comment.profile }}" alt="" />
+          <div class="d-flex flex-column">
+            <p class="name"><strong class="link"
+                [routerLink]="['/profile/'+comment.user_id]">{{ comment.name }}</strong> • {{ comment.created_at }}</p>
+            <p class="pin-comment">
+              {{ comment.content }}
+            </p>
+            <div class="d-flex mt-1 comment-like">
+              <button mat-icon-button (click)="comment_like(comment.id,i)">
+                <mat-icon class="txt-teal">thumb_up</mat-icon>
+              </button>
+              <p class="txt-teal">{{ comment.likes }}</p>
+              <button mat-icon-button (click)="comment_dislike(comment.id,i)">
+                <mat-icon class="txt-danger">thumb_down</mat-icon>
+              </button>
+              <p class="txt-danger">{{ comment.dislikes }}</p>
+             
+              <button *ngIf="is_auth &&comment.user_id == user.id" mat-icon-button>
+                <mat-icon (click)="delete(comment.id,i)" class="txt-gray">delete</mat-icon>
+              </button>
+              <p *ngIf="is_auth && comment.user_id == user.id" (click)="delete(comment.id,i)" class="txt-gray link">Eliminar</p>
+
+           
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12 side">
+      <app-product-related [more]=more [url_asset]=_api.url_asset [products]=products></app-product-related>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0,0,0,0.5)" size="large" color="#fff" type="pacman"></ngx-spinner>

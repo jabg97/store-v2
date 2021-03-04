@@ -1,0 +1,21 @@
+mat-icon::selection {
+  color: none;
+  background: none;
+}
+
+.item {
+  letter-spacing: 0px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 21px;
+  height: 48px !important;
+}
+
+p::selection {
+  color: none;
+  background: none;
+}
+
+.item.mat-list-item{
+height: 78px !important;
+}

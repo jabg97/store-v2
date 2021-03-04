@@ -1,0 +1,39 @@
+<mat-nav-list class="dashboard">
+
+  <div *ngIf="is_auth">
+    <a *ngFor="let detail of navService.details" mat-list-item class="item">
+      <p matLine  style="font-weight: 900;">{{ detail.name }}</p>
+      <p matLine >${{ detail.unit_value | number }} X {{ detail.quantity | number }}
+      </p>
+      <p>${{ (detail.unit_value * detail.quantity) | number }}</p>
+      <p matLine>
+        <mat-icon (click)="add_item(detail.id)" class="txt-success">add_circle</mat-icon>
+        <mat-icon *ngIf="detail.quantity > 1" (click)="rem_item(detail.id)" class="txt-danger">remove_circle</mat-icon>
+        <mat-icon (click)="del_item(detail.id)" class="txt-gray">delete</mat-icon></p>
+    </a>
+    <a *ngIf="navService.details.length > 0" mat-list-item class="item">
+      <mat-icon mat-list-icon class="txt-success">receipt
+      </mat-icon>
+      <p matLine  style="font-weight: 900;" class="txt-success" >Total: {{getTotal(navService.details) | number }} </p>
+    </a>
+
+    <a (click)="clear(this._api.getUser)" *ngIf="navService.details.length > 0" mat-list-item class="item" >
+      <mat-icon mat-list-icon class="txt-danger">remove_shopping_cart
+      </mat-icon>
+      <p matLine style="font-weight: 900;" class="txt-danger">Vaciar Carrito</p>
+    </a>
+    
+  </div>
+  <div *ngIf="!is_auth || navService.details.length == 0">
+    <a mat-list-item class="item">
+      <mat-icon mat-list-icon class="txt-danger">notification_important
+      </mat-icon>
+      <p matLine style="font-weight: 900;" class="txt-danger">Carrito Vacio</p>
+    </a>
+  </div>
+  
+
+  <mat-divider *ngIf="navService.isOpen"></mat-divider>
+
+
+</mat-nav-list>
